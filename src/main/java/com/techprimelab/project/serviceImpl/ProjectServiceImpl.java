@@ -1,0 +1,7 @@
+package com.techprimelab.project.serviceImpl;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class ProjectServiceImpl {
+}
