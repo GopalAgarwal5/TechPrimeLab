@@ -24,13 +24,22 @@ public class AuthService {
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
                 .build();
-        repository.save(user);
-        var jwtToken = jwtUtil.generateToken(user);
-        return UserAuthRes.builder()
-                .success(true)
-                .message("register successfully")
-                .token(jwtToken)
-                .build();
+
+        try {
+            User temp = repository.save(user);
+            var jwtToken = jwtUtil.generateToken(user);
+            return UserAuthRes.builder()
+                    .success(true)
+                    .message("New project added successfully")
+                    .token(jwtToken)
+                    .build();
+        } catch (Exception e) {
+            return UserAuthRes.builder()
+                    .success(false)
+                    .message("Project not added")
+                    .token(null)
+                    .build();
+        }
     }
 
     public UserAuthRes authenticate(UserAuthReq req) {
@@ -40,6 +49,7 @@ public class AuthService {
 //                        req.getPassword()
 //                )
 //        );
+//        try {
         var user = repository.findByEmail(req.getEmail()).orElseThrow();
         var jwtToken = jwtUtil.generateToken(user);
         return UserAuthRes.builder()
@@ -47,6 +57,13 @@ public class AuthService {
                 .success(true)
                 .token(jwtToken)
                 .build();
+//        } catch (Exception e) {
+//            return UserAuthRes.builder()
+//                    .message("Invalid User")
+//                    .success(false)
+//                    .token(null)
+//                    .build();
+//        }
     }
 }
 

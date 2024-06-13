@@ -32,5 +32,4 @@ public class Project {
     private Date endDate;
     private String location;
     private String status;
-
 }

@@ -4,7 +4,6 @@ import com.techprimelab.project.authentication.AuthService;
 import com.techprimelab.project.dto.RegisterReq;
 import com.techprimelab.project.dto.UserAuthReq;
 import com.techprimelab.project.dto.UserAuthRes;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class LoginRestController {
     private final AuthService service;
+
+    public LoginRestController(AuthService service) {
+        this.service = service;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<UserAuthRes> register(@RequestBody RegisterReq req) {
